@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournoi Viewers des Ténèbres</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e9d5ff, #fce7f3, #e9d5ff);
+            padding: 24px;
+        }
+        
+        .container {
+            max-width: 1700px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #5b21b6;
+            margin: 0;
+        }
+        
+        .subtitle {
+            color: #7c3aed;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .reset-button {
+            background-color: #7c3aed;
+            color: white;
+            padding: 8px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 32px;
+        }
+        
+        .reset-button:hover {
+            background-color: #6d28d9;
+        }
+        
+        .tournament-layout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            overflow-x: auto;
+            min-height: 720px;
+        }
+        
+        .round-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .round-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #5b21b6;
+            margin-bottom: 24px;
+        }
+        
+        .participants-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .quarters-container {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+        
+        .semis-container {
+            display: flex;
+            flex-direction: column;
+            gap: 96px;
+        }
+        
+        .finals-container {
+            display: flex;
+            flex-direction: column;
+            gap: 192px;
+        }
+        
+        .winner-container {
+            margin-top: 96px;
+        }
+        
+        .participant-input {
+            width: 160px;
+            padding: 8px;
+            background-color: white;
+            border: 2px solid #a78bfa;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #5b21b6;
+        }
+        
+        .participant-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+        
+        .quarter-input {
+            width: 160px;
+            padding: 8px;
+            background-color: #fdf2f8;
+            border: 2px solid #f472b6;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #9d174d;
+        }
+        
+        .quarter-input:focus {
+            outline: none;
+            border-color: #ec4899;
+        }
+        
+        .semi-input {
+            width: 160px;
+            padding: 8px;
+            background-color: #eff6ff;
+            border: 2px solid #60a5fa;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e40af;
+        }
+        
+        .semi-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .final-input {
+            width: 160px;
+            padding: 8px;
+            background-color: #fff7ed;
+            border: 2px solid #fb923c;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #9a3412;
+        }
+        
+        .final-input:focus {
+            outline: none;
+            border-color: #f97316;
+        }
+        
+        .winner-input {
+            width: 176px;
+            padding: 12px;
+            background: linear-gradient(to right, #fef3c7, #fde047);
+            border: 2px solid #eab308;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #713f12;
+            text-align: center;
+        }
+        
+        .winner-input:focus {
+            outline: none;
+            border-color: #d97706;
+        }
+        
+        .info-text {
+            text-align: center;
+            margin-top: 48px;
+            color: #6d28d9;
+            font-weight: 500;
+        }
+        
+        .svg-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="title-container">
+                <span style="font-size: 36px;">🎰</span>
+                <h1 class="title">Tournoi Viewers des Ténèbres</h1>
+                <span style="font-size: 36px;">🎰</span>
+            </div>
+            <p class="subtitle">Calls Casino - Machines à Sous</p>
+        </div>
+
+        <!-- Reset Button -->
+        <div style="text-align: center;">
+            <button class="reset-button" onclick="resetTournament()">
+                🔄 Réinitialiser
+            </button>
+        </div>
+
+        <!-- Tournament Layout -->
+        <div class="tournament-layout">
+          
+            <!-- 1er Tour -->
+            <div class="round-container">
+                <h2 class="round-title">1er Tour</h2>
+                <div class="participants-container" id="participants">
+                    <!-- Participants will be generated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Connecting SVG Lines 1er Tour -> Quarts -->
+            <div class="svg-connector">
+                <svg width="60" height="720" style="overflow: visible;">
+                    <!-- Groupe 1 -->
+                    <path d="M 0 30 L 30 30 L 30 60 L 60 60" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    <path d="M 0 72 L 30 72 L 30 60 L 60 60" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 2 -->
+                    <path d="M 0 114 L 30 114 L 30 144 L 60 144" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    <path d="M 0 156 L 30 156 L 30 144 L 60 144" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 3 -->
+                    <path d="M 0 198 L 30 198 L 30 228 L 60 228" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    <path d="M 0 240 L 30 240 L 30 228 L 60 228" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 4 -->
+                    <path d="M 0 282 L 30 282 L 30 312 L 60 312" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    <path d="M 0 324 L 30 324 L 30 312 L 60 312" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 5 -->
+                    <path d="M 0 366 L 30 366 L 30 396 L 60 396" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    <path d="M 0 408 L 30 408 L 30 396 L 60 396" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 6 -->
+                    <path d="M 0 450 L 30 450 L 30 480 L 60 480" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    <path d="M 0 492 L 30 492 L 30 480 L 60 480" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 7 -->
+                    <path d="M 0 534 L 30 534 L 30 564 L 60 564" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    <path d="M 0 576 L 30 576 L 30 564 L 60 564" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 8 -->
+                    <path d="M 0 618 L 30 618 L 30 648 L 60 648" stroke="#9333ea" stroke-width="2" fill="none"/>
+                    <path d="M 0 660 L 30 660 L 30 648 L 60 648" stroke="#9333ea" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+
+            <!-- Quarts de Finale -->
+            <div class="round-container">
+                <h2 class="round-title">Quarts de Finale</h2>
+                <div class="quarters-container" id="quarterFinalists">
+                    <!-- Quarter finalists will be generated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Connecting SVG Lines Quarts -> Demi -->
+            <div class="svg-connector">
+                <svg width="60" height="480" style="overflow: visible;">
+                    <!-- Groupe 1 -> Demi 1 -->
+                    <path d="M 0 30 L 30 30 L 30 90 L 60 90" stroke="#ec4899" stroke-width="2" fill="none"/>
+                    <path d="M 0 114 L 30 114 L 30 90 L 60 90" stroke="#ec4899" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 2 -> Demi 2 -->
+                    <path d="M 0 198 L 30 198 L 30 258 L 60 258" stroke="#ec4899" stroke-width="2" fill="none"/>
+                    <path d="M 0 282 L 30 282 L 30 258 L 60 258" stroke="#ec4899" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 3 -> Demi 3 -->
+                    <path d="M 0 366 L 30 366 L 30 426 L 60 426" stroke="#ec4899" stroke-width="2" fill="none"/>
+                    <path d="M 0 450 L 30 450 L 30 426 L 60 426" stroke="#ec4899" stroke-width="2" fill="none"/>
+                    
+                    <!-- Groupe 4 -> Demi 4 -->
+                    <path d="M 0 534 L 30 534 L 30 594 L 60 594" stroke="#ec4899" stroke-width="2" fill="none"/>
+                    <path d="M 0 618 L 30 618 L 30 594 L 60 594" stroke="#ec4899" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+
+            <!-- Demi-Finales -->
+            <div class="round-container">
+                <h2 class="round-title">Demi-Finales</h2>
+                <div class="semis-container" id="semiFinalists">
+                    <!-- Semi finalists will be generated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Connecting SVG Lines Demi -> Finale -->
+            <div class="svg-connector">
+                <svg width="60" height="360" style="overflow: visible;">
+                    <!-- Demi 1 -> Finale 1 -->
+                    <path d="M 0 30 L 30 30 L 30 120 L 60 120" stroke="#3b82f6" stroke-width="2" fill="none"/>
+                    <path d="M 0 150 L 30 150 L 30 120 L 60 120" stroke="#3b82f6" stroke-width="2" fill="none"/>
+                    
+                    <!-- Demi 2 -> Finale 2 -->
+                    <path d="M 0 270 L 30 270 L 30 360 L 60 360" stroke="#3b82f6" stroke-width="2" fill="none"/>
+                    <path d="M 0 390 L 30 390 L 30 360 L 60 360" stroke="#3b82f6" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+
+            <!-- Finale -->
+            <div class="round-container">
+                <h2 class="round-title">Finale</h2>
+                <div class="finals-container" id="finalists">
+                    <!-- Finalists will be generated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Connecting SVG Lines Finale -> Gagnant -->
+            <div class="svg-connector">
+                <svg width="60" height="240" style="overflow: visible;">
+                    <!-- Finale -> Gagnant -->
+                    <path d="M 0 30 L 30 30 L 30 120 L 60 120" stroke="#f97316" stroke-width="2" fill="none"/>
+                    <path d="M 0 222 L 30 222 L 30 120 L 60 120" stroke="#f97316" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+
+            <!-- Gagnant -->
+            <div class="round-container">
+                <h2 class="round-title">GAGNANT</h2>
+                <div class="winner-container">
+                    <input
+                        type="text"
+                        id="winner"
+                        class="winner-input"
+                        placeholder="🏆 Champion 🏆"
+                    />
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Simple info at bottom -->
+        <div class="info-text">
+            <p>Structure: 16 → 8 → 4 → 2 → 1 🎰</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Initialize the tournament
+        let participants = [];
+        let quarterFinalists = [];
+        let semiFinalists = [];
+        let finalists = [];
+
+        function initializeTournament() {
+            // Initialize participants
+            participants = [];
+            for (let i = 0; i < 16; i++) {
+                participants.push(`Participant ${i + 1}`);
+            }
+
+            // Initialize other rounds
+            quarterFinalists = new Array(8).fill('');
+            semiFinalists = new Array(4).fill('');
+            finalists = new Array(2).fill('');
+
+            renderTournament();
+        }
+
+        function renderTournament() {
+            // Render participants
+            const participantsContainer = document.getElementById('participants');
+            participantsContainer.innerHTML = '';
+            participants.forEach((participant, index) => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = participant;
+                input.className = 'participant-input';
+                input.placeholder = `Participant ${index + 1}`;
+                input.addEventListener('input', (e) => {
+                    participants[index] = e.target.value;
+                });
+                participantsContainer.appendChild(input);
+            });
+
+            // Render quarter finalists
+            const quarterFinalistsContainer = document.getElementById('quarterFinalists');
+            quarterFinalistsContainer.innerHTML = '';
+            quarterFinalists.forEach((finalist, index) => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = finalist;
+                input.className = 'quarter-input';
+                input.placeholder = `Gagnant ${index + 1}`;
+                input.addEventListener('input', (e) => {
+                    quarterFinalists[index] = e.target.value;
+                });
+                quarterFinalistsContainer.appendChild(input);
+            });
+
+            // Render semi finalists
+            const semiFinalistsContainer = document.getElementById('semiFinalists');
+            semiFinalistsContainer.innerHTML = '';
+            semiFinalists.forEach((finalist, index) => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = finalist;
+                input.className = 'semi-input';
+                input.placeholder = `Demi-finaliste ${index + 1}`;
+                input.addEventListener('input', (e) => {
+                    semiFinalists[index] = e.target.value;
+                });
+                semiFinalistsContainer.appendChild(input);
+            });
+
+            // Render finalists
+            const finalistsContainer = document.getElementById('finalists');
+            finalistsContainer.innerHTML = '';
+            finalists.forEach((finalist, index) => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = finalist;
+                input.className = 'final-input';
+                input.placeholder = `Finaliste ${index + 1}`;
+                input.addEventListener('input', (e) => {
+                    finalists[index] = e.target.value;
+                });
+                finalistsContainer.appendChild(input);
+            });
+        }
+
+        function resetTournament() {
+            initializeTournament();
+            document.getElementById('winner').value = '';
+        }
+
+        // Initialize the tournament when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTournament();
+        });
+    </script>
+</body>
+</html>
